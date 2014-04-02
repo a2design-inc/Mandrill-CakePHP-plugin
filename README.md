@@ -1,7 +1,5 @@
 # Mandrill CakePHP plugin
 
-=======================
-
 ### Usage
 
 This plugin uses [CakeEmail class](http://book.cakephp.org/2.0/en/core-utility-libraries/email.html), and works almost the same.
