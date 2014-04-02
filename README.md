@@ -90,7 +90,7 @@ $email->send();
 
 Part of email template:
 
-```
+```html
 <p>Global vars example. Here the current date: *|date|*</p>
 <p>Email sent for *|name|* (*|email|*)</p>
 ```
