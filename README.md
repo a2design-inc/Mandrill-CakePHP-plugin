@@ -44,6 +44,40 @@ $to = array(
 $email->addHeaders(array(
     'X-Tags' => array('test',),
     'X-SubAccount' => 'YOUR_SUBACCOUNT',
+     'X-GlobalVars' => array(
+        array(
+            'name' => 'date',
+            'content' => date('Y-m-d'),
+        ),
+    ),
+    'X-Vars' => array(
+        array(
+            'rcpt' => 'to1@example.com',
+            'vars' => array(
+                array(
+                    'name' => 'email',
+                    'content' => 'to1@example.com'
+                ),
+                array(
+                    'name' => 'name',
+                    'content' => 'to1Name'
+                ),
+            )
+        ),
+        array(
+            'rcpt' => 'to2@example.com',
+            'vars' => array(
+                array(
+                    'name' => 'email',
+                    'content' => 'to2@example.com'
+                ),
+                array(
+                    'name' => 'name',
+                    'content' => 'to2Name'
+                ),
+            )
+        ),
+    ),
 ));
 
 $email->template('test', 'default');
@@ -54,9 +88,16 @@ $email->subject('Mandrill CakePHP Plugin Test');
 $email->send();
 ```
 
+Part of email template:
+
+```
+<p>Global vars example. Here the current date: *|date|*</p>
+<p>Email sent for *|name|* (*|email|*)</p>
+```
+
 About sub accounts you can read [here](http://help.mandrill.com/forums/22476178-Subaccounts-Basics).
 
-The syntax of all parameters is the same as the default [CakeEmail class](http://book.cakephp.org/2.0/en/core-utility-libraries/email.html):
+The syntax of all parameters is the same as the default [CakeEmail class](http://book.cakephp.org/2.0/en/core-utility-libraries/email.html).
 
 ### Installation
 
