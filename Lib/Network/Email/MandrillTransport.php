@@ -87,6 +87,19 @@ class MandrillTransport extends AbstractTransport {
             );
         }
 
+        $attachments = $this->_cakeEmail->attachments();
+
+        if (!empty($attachments)) {
+            $message['attachments'] = array();
+            foreach ($attachments as $file => $data) {
+                $message['attachments'][] = array(
+                    'type' => $data['mimetype'],
+                    'name' => $file,
+                    'content' => base64_encode(file_get_contents($data['file'])),
+                );
+            }
+        }
+
         $params = array('message' => $message, "async" => false, "ip_pool" => null, "send_at" => null);
 
         return $this->_exec($params);

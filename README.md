@@ -78,6 +78,13 @@ $email->addHeaders(array(
     ),
 ));
 
+$email->addAttachments(array(
+    'example.pdf' => array(
+        'file' => APP . '/webroot/files/readme.pdf',
+        'mimetype' => 'application/pdf',
+    ),
+));
+
 $email->template('test', 'default');
 $email->viewVars($viewVars);
 $email->to($to);
