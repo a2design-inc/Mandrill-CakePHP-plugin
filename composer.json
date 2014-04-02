@@ -1,0 +1,32 @@
+{
+    "name": "a2design-company/Mandrill-CakePHP-plugin",
+    "description": "Mandrill CakePHP plugin",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "mandrill", "api"],
+    "homepage": "https://github.com/a2design-company/Mandrill-CakePHP-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MrMYSTIC",
+            "homepage": "https://github.com/MrMYSTIC",
+            "role": "Author"
+        },
+        {
+            "name": "A2 Design",
+            "homepage": "https://github.com/a2design-company",
+            "role": "Author"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/a2design-company/Mandrill-CakePHP-plugin/issues",
+        "source": "https://github.com/a2design-company/Mandrill-CakePHP-plugin"
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "lib-curl": "*",
+        "composer/installers": "*"
+    },
+    "extra": {
+        "installer-name": "Mandrill"
+    }
+}
