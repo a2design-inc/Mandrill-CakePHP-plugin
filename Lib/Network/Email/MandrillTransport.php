@@ -87,6 +87,22 @@ class MandrillTransport extends AbstractTransport {
             );
         }
 
+        foreach ($this->_cakeEmail->cc() as $email => $name) {
+            $message['to'][] = array(
+                'email' => $email,
+                'name' => $name,
+                'type' => 'cc'
+            );
+        }
+
+        foreach ($this->_cakeEmail->bcc() as $email => $name) {
+            $message['to'][] = array(
+                'email' => $email,
+                'name' => $name,
+                'type' => 'bcc'
+            );
+        }
+        
         $attachments = $this->_cakeEmail->attachments();
 
         if (!empty($attachments)) {
