@@ -128,7 +128,9 @@ class MandrillTransport extends AbstractTransport {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mandrill-PHP/1.0.52');
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        if (!ini_get('safe_mode') && !ini_get('open_basedir')){
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        }
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
