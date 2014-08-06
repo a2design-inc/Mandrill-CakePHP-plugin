@@ -40,15 +40,15 @@ $to = array(
 );
 
 $email->addHeaders(array(
-    'X-Tags' => array('test',),
-    'X-SubAccount' => 'YOUR_SUBACCOUNT',
-     'X-GlobalVars' => array(
+    'tags' => array('test',),
+    'subAccount' => 'YOUR_SUBACCOUNT',
+    'global_merge_vars' => array(
         array(
             'name' => 'date',
             'content' => date('Y-m-d'),
         ),
     ),
-    'X-Vars' => array(
+    'merge_vars' => array(
         array(
             'rcpt' => 'to1@example.com',
             'vars' => array(
