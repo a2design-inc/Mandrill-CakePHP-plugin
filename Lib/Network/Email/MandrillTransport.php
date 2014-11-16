@@ -3,154 +3,166 @@
 App::uses('AbstractTransport', 'Network/Email');
 
 class MandrillTransport extends AbstractTransport {
-    /**
-     * CakeEmail
-     *
-     * @var CakeEmail
-     */
-    protected $_cakeEmail;
 
-    /**
-     * CakeEmail headers
-     *
-     * @var array
-     */
-    protected $_headers;
+	/**
+	 * CakeEmail
+	 *
+	 * @var CakeEmail
+	 */
+	protected $_cakeEmail;
 
-    /**
-     * Configuration to transport
-     *
-     * @var mixed
-     */
-    protected $_config = array();
+	/**
+	 * CakeEmail headers
+	 *
+	 * @var array
+	 */
+	protected $_headers;
 
-    /**
-     * Recipients list
-     *
-     * @var mixed
-     */
-    protected $_recipients = array();
+	/**
+	 * Configuration to transport
+	 *
+	 * @var mixed
+	 */
+	protected $_config = array();
 
-    /**
-     * Sends out email via Mandrill
-     *
-     * @return array
-     */
-    public function send(CakeEmail $email) {
+	/**
+	 * Recipients list
+	 *
+	 * @var mixed
+	 */
+	protected $_recipients = array();
 
-        // CakeEmail
-        $this->_cakeEmail = $email;
+	/**
+	 * Sends out email via Mandrill
+	 *
+	 * @return array
+	 */
+	public function send(CakeEmail $email) {
 
-        $this->_config = $this->_cakeEmail->config();
+		// CakeEmail
+		$this->_cakeEmail = $email;
 
-        $this->_headers = $this->_cakeEmail->getHeaders();
-        $this->_recipients = $email->to();
+		$this->_config = $this->_cakeEmail->config();
 
-        $message = array(
-            'html' => $this->_cakeEmail->message('html'),
-            'text' => $this->_cakeEmail->message('text'),
-            'subject' => $this->_cakeEmail->subject(),
-            'from_email' => $this->_config['from'],
-            'from_name' => $this->_config['fromName'],
-            'to' => array(),
-            'headers' => array('Reply-To' => $this->_config['from']),
-            'important' => false,
-            'track_opens' => null,
-            'track_clicks' => null,
-            'auto_text' => null,
-            'auto_html' => null,
-            'inline_css' => null,
-            'url_strip_qs' => null,
-            'preserve_recipients' => null,
-            'view_content_link' => null,
-            'tracking_domain' => null,
-            'signing_domain' => null,
-            'return_path_domain' => null,
-            'merge' => true,
-            'tags' => $this->_headers['X-Tags'],
-            'subaccount' => $this->_headers['X-SubAccount'],
-        );
+		$this->_headers = $this->_cakeEmail->getHeaders();
+		$this->_recipients = $email->to();
 
-        if (!empty($this->_headers['X-GlobalVars'])) {
-            $message['global_merge_vars'] = $this->_headers['X-GlobalVars'];
-        }
+		$tags = null;
+		if (isset($this->_headers['X-Tags'])) {
+			$tags = $this->_headers['X-Tags'];
+		}
 
-        if (!empty($this->_headers['X-Vars'])) {
-            $message['merge_vars'] = $this->_headers['X-Vars'];
-        }
+		$subaccount = null;
+		if (isset($this->_headers['X-SubAccount'])) {
+			$subaccount = $this->_headers['X-SubAccount'];
+		}
 
-        foreach ($this->_recipients as $email => $name) {
-            $message['to'][] = array(
-                'email' => $email,
-                'name' => $name,
-                'type' => 'to'
-            );
-        }
+		$message = array(
+			'html' => $this->_cakeEmail->message('html'),
+			'text' => $this->_cakeEmail->message('text'),
+			'subject' => $this->_cakeEmail->subject(),
+			'from_email' => $this->_config['from'],
+			'from_name' => $this->_config['fromName'],
+			'to' => array(),
+			'headers' => array('Reply-To' => $this->_config['from']),
+			'important' => false,
+			'track_opens' => null,
+			'track_clicks' => null,
+			'auto_text' => null,
+			'auto_html' => null,
+			'inline_css' => null,
+			'url_strip_qs' => null,
+			'preserve_recipients' => null,
+			'view_content_link' => null,
+			'tracking_domain' => null,
+			'signing_domain' => null,
+			'return_path_domain' => null,
+			'merge' => true,
+			'tags' => $tags,
+			'subaccount' => $subaccount,
+		);
 
-        foreach ($this->_cakeEmail->cc() as $email => $name) {
-            $message['to'][] = array(
-                'email' => $email,
-                'name' => $name,
-                'type' => 'cc'
-            );
-        }
+		if (!empty($this->_headers['X-GlobalVars'])) {
+			$message['global_merge_vars'] = $this->_headers['X-GlobalVars'];
+		}
 
-        foreach ($this->_cakeEmail->bcc() as $email => $name) {
-            $message['to'][] = array(
-                'email' => $email,
-                'name' => $name,
-                'type' => 'bcc'
-            );
-        }
-        
-        $attachments = $this->_cakeEmail->attachments();
+		if (!empty($this->_headers['X-Vars'])) {
+			$message['merge_vars'] = $this->_headers['X-Vars'];
+		}
 
-        if (!empty($attachments)) {
-            $message['attachments'] = array();
-            foreach ($attachments as $file => $data) {
-                $message['attachments'][] = array(
-                    'type' => $data['mimetype'],
-                    'name' => $file,
-                    'content' => base64_encode(file_get_contents($data['file'])),
-                );
-            }
-        }
+		foreach ($this->_recipients as $email => $name) {
+			$message['to'][] = array(
+				'email' => $email,
+				'name' => $name,
+				'type' => 'to'
+			);
+		}
 
-        $params = array('message' => $message, "async" => false, "ip_pool" => null, "send_at" => null);
+		foreach ($this->_cakeEmail->cc() as $email => $name) {
+			$message['to'][] = array(
+				'email' => $email,
+				'name' => $name,
+				'type' => 'cc'
+			);
+		}
 
-        return $this->_exec($params);
-    }
+		foreach ($this->_cakeEmail->bcc() as $email => $name) {
+			$message['to'][] = array(
+				'email' => $email,
+				'name' => $name,
+				'type' => 'bcc'
+			);
+		}
 
-    private function _exec($params) {
-        $params['key'] = $this->_config['api_key'];
-        $params = json_encode($params);
+		$attachments = $this->_cakeEmail->attachments();
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mandrill-PHP/1.0.52');
-        curl_setopt($ch, CURLOPT_POST, true);
-        if (!ini_get('safe_mode') && !ini_get('open_basedir')){
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        }
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 600);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		if (!empty($attachments)) {
+			$message['attachments'] = array();
+			foreach ($attachments as $file => $data) {
+				$message['attachments'][] = array(
+					'type' => $data['mimetype'],
+					'name' => $file,
+					'content' => base64_encode(file_get_contents($data['file'])),
+				);
+			}
+		}
 
-        curl_setopt($ch, CURLOPT_URL, 'https://mandrillapp.com/api/1.0/messages/send.json');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-        curl_setopt($ch, CURLOPT_VERBOSE, false);
+		$params = array('message' => $message, "async" => false, "ip_pool" => null, "send_at" => null);
 
-        $response_body = curl_exec($ch);
+		return $this->_exec($params);
+	}
 
-        if(curl_error($ch)) {
-            throw new Exception("API call to messages/send failed: " . curl_error($ch));
-        }
-        $result = json_decode($response_body, true);
-        if($result === null) throw new Exception('We were unable to decode the JSON response from the Mandrill API: ' . $response_body);
+	private function _exec($params) {
+		$params['key'] = $this->_config['api_key'];
+		$params = json_encode($params);
 
-        return $result;
-    }
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_USERAGENT, 'Mandrill-PHP/1.0.52');
+		curl_setopt($ch, CURLOPT_POST, true);
+		if (!ini_get('safe_mode') && !ini_get('open_basedir')) {
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		}
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 600);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+		curl_setopt($ch, CURLOPT_URL, 'https://mandrillapp.com/api/1.0/messages/send.json');
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+		curl_setopt($ch, CURLOPT_VERBOSE, false);
+
+		$response_body = curl_exec($ch);
+
+		if (curl_error($ch)) {
+			throw new Exception("API call to messages/send failed: " . curl_error($ch));
+		}
+		$result = json_decode($response_body, true);
+		if ($result === null)
+			throw new Exception('We were unable to decode the JSON response from the Mandrill API: ' . $response_body);
+
+		return $result;
+	}
 
 }
