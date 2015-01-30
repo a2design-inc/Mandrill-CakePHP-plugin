@@ -49,7 +49,7 @@ class MandrillTransport extends AbstractTransport {
         $message = array(
             'html' => $this->_cakeEmail->message('html'),
             'text' => $this->_cakeEmail->message('text'),
-            'subject' => $this->_cakeEmail->subject(),
+            'subject' => mb_decode_mimeheader($this->_cakeEmail->subject()),
             'from_email' => $this->_config['from'],
             'from_name' => $this->_config['fromName'],
             'to' => array(),
