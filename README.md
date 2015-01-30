@@ -113,6 +113,15 @@ cd path/to/app/Plugin
 git clone git@github.com:a2design-company/Mandrill-CakePHP-plugin.git Mandrill
 ```
 
+Also you can use composer for install this plugin. Just add new requirement to your composer.json
+
+```
+"require": {
+    ...,
+    "a2design-company/mandrill-cakephp-plugin": "*"
+},
+```
+
 Bootstrap the plugin in app/Config/bootstrap.php:
 
 ```php
