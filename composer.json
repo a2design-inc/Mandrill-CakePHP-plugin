@@ -1,5 +1,5 @@
 {
-    "name": "a2design-inc/Mandrill-CakePHP-plugin",
+    "name": "a2design-inc/mandrill-cakephp-plugin",
     "description": "Mandrill CakePHP plugin",
     "type": "cakephp-plugin",
     "keywords": ["cakephp", "mandrill", "api"],
