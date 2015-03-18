@@ -1,9 +1,9 @@
 {
-    "name": "a2design-company/mandrill-cakephp-plugin",
+    "name": "a2design-inc/Mandrill-CakePHP-plugin",
     "description": "Mandrill CakePHP plugin",
     "type": "cakephp-plugin",
     "keywords": ["cakephp", "mandrill", "api"],
-    "homepage": "https://github.com/a2design-company/Mandrill-CakePHP-plugin",
+    "homepage": "https://github.com/a2design-inc/Mandrill-CakePHP-plugin",
     "license": "MIT",
     "authors": [
         {
@@ -13,13 +13,13 @@
         },
         {
             "name": "A2 Design",
-            "homepage": "https://github.com/a2design-company",
+            "homepage": "https://github.com/a2design-inc",
             "role": "Author"
         }
     ],
     "support": {
-        "issues": "https://github.com/a2design-company/Mandrill-CakePHP-plugin/issues",
-        "source": "https://github.com/a2design-company/Mandrill-CakePHP-plugin"
+        "issues": "https://github.com/a2design-inc/Mandrill-CakePHP-plugin/issues",
+        "source": "https://github.com/a2design-inc/Mandrill-CakePHP-plugin"
     },
     "require": {
         "php": ">=5.3.0",
