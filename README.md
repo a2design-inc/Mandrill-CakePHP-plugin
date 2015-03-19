@@ -42,6 +42,7 @@ $to = array(
 $email->addHeaders(array(
     'tags' => array('test',),
     'subAccount' => 'YOUR_SUBACCOUNT',
+    'preserve_recipients' => false,
     'global_merge_vars' => array(
         array(
             'name' => 'date',
