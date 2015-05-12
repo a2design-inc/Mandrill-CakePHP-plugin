@@ -25,15 +25,9 @@ class MandrillTransport extends AbstractTransport {
     protected $_config = array();
 
     /**
-     * Recipients list
-     *
-     * @var mixed
-     */
-    protected $_recipients = array();
-
-    /**
      * Sends out email via Mandrill
      *
+     * @param CakeEmail $email
      * @return array
      */
     public function send(CakeEmail $email) {
@@ -41,19 +35,24 @@ class MandrillTransport extends AbstractTransport {
         // CakeEmail
         $this->_cakeEmail = $email;
 
+        $from = $this->_cakeEmail->from();
+
+        list($fromEmail) = array_keys($from);
+
+        $fromName = $from[$fromEmail];
+
         $this->_config = $this->_cakeEmail->config();
 
         $this->_headers = $this->_cakeEmail->getHeaders();
-        $this->_recipients = $email->to();
 
         $message = array(
             'html' => $this->_cakeEmail->message('html'),
             'text' => $this->_cakeEmail->message('text'),
             'subject' => mb_decode_mimeheader($this->_cakeEmail->subject()),
-            'from_email' => $this->_config['from'],
-            'from_name' => $this->_config['fromName'],
+            'from_email' => $fromEmail,
+            'from_name' => $fromName,
             'to' => array(),
-            'headers' => array('Reply-To' => $this->_config['from']),
+            'headers' => array('Reply-To' => $fromEmail),
             'important' => false,
             'track_opens' => null,
             'track_clicks' => null,
@@ -73,7 +72,7 @@ class MandrillTransport extends AbstractTransport {
 
         $message = array_merge($message, $this->_headers);
 
-        foreach ($this->_recipients as $email => $name) {
+        foreach ($this->_cakeEmail->to() as $email => $name) {
             $message['to'][] = array(
                 'email' => $email,
                 'name' => $name,
@@ -115,6 +114,13 @@ class MandrillTransport extends AbstractTransport {
         return $this->_exec($params);
     }
 
+    /**
+     * Sending API request
+     *
+     * @param array $params
+     * @return array
+     * @throws Exception
+     */
     private function _exec($params) {
         $params['key'] = $this->_config['api_key'];
         $params = json_encode($params);
