@@ -71,6 +71,11 @@ class MandrillTransport extends AbstractTransport {
             'google_analytics_domains' => array(),
             'google_analytics_campaign' => array(),
             'recipient_metadata' => array(),
+
+            // Send config
+            'async' => false,
+            'ip_pool' => null,
+            'send_at' => null,
         );
 
         $message = array_merge($message, $this->_headers);
@@ -98,7 +103,7 @@ class MandrillTransport extends AbstractTransport {
                 'type' => 'bcc'
             );
         }
-        
+
         $attachments = $this->_cakeEmail->attachments();
 
         if (!empty($attachments)) {
@@ -112,7 +117,12 @@ class MandrillTransport extends AbstractTransport {
             }
         }
 
-        $params = array('message' => $message, "async" => false, "ip_pool" => null, "send_at" => null);
+        $params = array(
+            'message' => $message,
+            "async" => $message['async'],
+            "ip_pool" => $message['ip_pool'],
+            "send_at" => $message['send_at'],
+        );
 
         return $this->_exec($params);
     }
