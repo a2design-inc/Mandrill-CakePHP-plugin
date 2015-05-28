@@ -68,6 +68,8 @@ class MandrillTransport extends AbstractTransport {
             'merge' => true,
             'tags' => null,
             'subaccount' => null,
+            'google_analytics_domains' => array(),
+            'google_analytics_campaign' => array(),
         );
 
         $message = array_merge($message, $this->_headers);
