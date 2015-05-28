@@ -68,9 +68,9 @@ class MandrillTransport extends AbstractTransport {
             'merge' => true,
             'tags' => null,
             'subaccount' => null,
-            'google_analytics_domains' => array(),
-            'google_analytics_campaign' => array(),
-            'recipient_metadata' => array(),
+            'google_analytics_domains' => null,
+            'google_analytics_campaign' => null,
+            'recipient_metadata' => null,
 
             // Send config
             'async' => false,
