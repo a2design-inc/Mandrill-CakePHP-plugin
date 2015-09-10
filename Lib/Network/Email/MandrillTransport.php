@@ -101,11 +101,19 @@ class MandrillTransport extends AbstractTransport {
         if (!empty($attachments)) {
             $message['attachments'] = array();
             foreach ($attachments as $file => $data) {
-                $message['attachments'][] = array(
-                    'type' => $data['mimetype'],
-                    'name' => $file,
-                    'content' => base64_encode(file_get_contents($data['file'])),
-                );
+                if (!empty($data['contentId'])) {
+                    $message['images'][] = array(
+                        'type' => $data['mimetype'],
+                        'name' => $data['contentId'],
+                        'content' => base64_encode(file_get_contents($data['file'])),
+                    );
+                } else {
+                    $message['attachments'][] = array(
+                        'type' => $data['mimetype'],
+                        'name' => $file,
+                        'content' => base64_encode(file_get_contents($data['file'])),
+                    );
+                }
             }
         }
 
