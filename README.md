@@ -84,6 +84,10 @@ $email->addAttachments(array(
         'file' => APP . '/webroot/files/readme.pdf',
         'mimetype' => 'application/pdf',
     ),
+    'logo.png' => array(
+        'file' => APP . '/webroot/img/logo.png',
+        'mimetype' => 'image/png',
+//      'contentId' => 'headerLogo', // Uncomment this line if you want use inline image
 ));
 
 $email->template('test', 'default');
