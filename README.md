@@ -77,6 +77,25 @@ $email->addHeaders(array(
             )
         ),
     ),
+    'google_analytics_domains' => array('YOUR_ANALYTICS_DOMAIN',),
+    'google_analytics_campaign' => array('YOUR_ANALYTICS_CAMPAIGN',),
+    'recipient_metadata' => array(
+        array(
+            'rcpt' => 'to1@example.com',
+            'values' => array(
+                'user_id' => 1,
+            ),
+        ),
+        array(
+            'rcpt' => 'to2@example.com',
+            'values' => array(
+                'user_id' => 2,
+            ),
+        ),
+    ),
+    'async' => false,
+    'ip_pool' => 'dedicated IP',
+    'send_at' => 'UTC timestamp in YYYY-MM-DD HH:MM:SS'
 ));
 
 $email->addAttachments(array(
