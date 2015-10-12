@@ -117,7 +117,13 @@ class MandrillTransport extends AbstractTransport {
             }
         }
 
-        $params = array('message' => $message, "async" => false, "ip_pool" => null, "send_at" => null);
+        $sendAt = null;
+
+        if (!empty($this->_headers['X-SendAt'])) {
+            $sendAt = $this->_headers['X-SendAt'];
+        }
+
+        $params = array('message' => $message, "async" => false, "ip_pool" => null, "send_at" => $sendAt);
 
         return $this->_exec($params);
     }
