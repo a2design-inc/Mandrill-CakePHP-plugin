@@ -52,7 +52,7 @@ class MandrillTransport extends AbstractTransport {
             'from_email' => $fromEmail,
             'from_name' => $fromName,
             'to' => array(),
-            'headers' => array('Reply-To' => $fromEmail),
+            'headers' => array('Reply-To' => $this->_cakeEmail->replyTo()),
             'important' => false,
             'track_opens' => null,
             'track_clicks' => null,
